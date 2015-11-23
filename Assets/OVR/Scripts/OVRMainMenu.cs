@@ -233,7 +233,7 @@ public class OVRMainMenu : MonoBehaviour
 		// Attach GUI texture to GUI object and GUI object to Camera
 		if(GUIRenderTexture != null && GUIRenderObject != null)
 		{
-			GUIRenderObject.renderer.material.mainTexture = GUIRenderTexture;
+			GUIRenderObject.GetComponent<Renderer>().material.mainTexture = GUIRenderTexture;
 			
 			if(CameraController != null)
 			{
@@ -265,7 +265,7 @@ public class OVRMainMenu : MonoBehaviour
 		// Make sure to hide cursor 
 		if(Application.isEditor == false)
 		{
-			Screen.showCursor = false; 
+			Cursor.visible = false; 
 			Screen.lockCursor = true;
 		}
 		

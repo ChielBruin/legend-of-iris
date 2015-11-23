@@ -118,7 +118,7 @@ public class OVRCamera : OVRComponent
 			int w = (int)(Screen.width / 2.0f * CameraTextureScale);
 			int h = (int)(Screen.height * CameraTextureScale);
 			
-			if ( camera.hdr )
+			if ( GetComponent<Camera>().hdr )
 				CameraTexture = new RenderTexture(  w, h, 24, RenderTextureFormat.ARGBFloat );	
 			else
 				CameraTexture = new RenderTexture(  w, h, 24 );
@@ -160,7 +160,7 @@ public class OVRCamera : OVRComponent
 		if(CameraTexture != null)
 		{
 			Graphics.SetRenderTarget(CameraTexture);
-			GL.Clear (true, true, camera.backgroundColor);
+			GL.Clear (true, true, GetComponent<Camera>().backgroundColor);
 		}
 	}
 	
@@ -216,7 +216,7 @@ public class OVRCamera : OVRComponent
 		Vector3    dir = Vector3.forward;		
 		
 		// Main camera has a depth of 0, so it will be rendered first
-		if(camera.depth == 0.0f)
+		if(GetComponent<Camera>().depth == 0.0f)
 		{			
 			// If desired, update parent transform y rotation here
 			// This is useful if we want to track the current location of
@@ -226,7 +226,7 @@ public class OVRCamera : OVRComponent
 			if(CameraController.TrackerRotatesY == true)
 			{
 				
-				Vector3 a = camera.transform.rotation.eulerAngles;
+				Vector3 a = GetComponent<Camera>().transform.rotation.eulerAngles;
 				a.x = 0; 
 				a.z = 0;
 				transform.parent.transform.eulerAngles = a;
@@ -281,15 +281,15 @@ public class OVRCamera : OVRComponent
 		
 		// * * *
 		// Update camera rotation
-		camera.transform.rotation = q;
+		GetComponent<Camera>().transform.rotation = q;
 		
 		// * * *
 		// Update camera position (first add Offset to parent transform)
-		camera.transform.position = 
-		camera.transform.parent.transform.position + NeckPosition;
+		GetComponent<Camera>().transform.position = 
+		GetComponent<Camera>().transform.parent.transform.position + NeckPosition;
 	
 		// Adjust neck by taking eye position and transforming through q
-		camera.transform.position += q * EyePosition;		
+		GetComponent<Camera>().transform.position += q * EyePosition;		
 	}
 
 	// LatencyTest
@@ -341,7 +341,7 @@ public class OVRCamera : OVRComponent
 		// NOTE: Unity skyboxes do not currently use the projection matrix, so
 		// if one wants to use a skybox with the Rift it must be implemented 
 		// manually		
-		camera.ResetProjectionMatrix();
+		GetComponent<Camera>().ResetProjectionMatrix();
 		Matrix4x4 om = Matrix4x4.identity;
     	om.SetColumn (3, new Vector4 (offset.x, offset.y, 0.0f, 1));
 
@@ -354,11 +354,11 @@ public class OVRCamera : OVRComponent
 			Vector3 s    = Vector3.one;
     		Matrix4x4 pm = Matrix4x4.TRS(t, r, s);
 			
-			camera.projectionMatrix = pm * om * camera.projectionMatrix;
+			GetComponent<Camera>().projectionMatrix = pm * om * GetComponent<Camera>().projectionMatrix;
 		}
 		else
 		{
-			camera.projectionMatrix = om * camera.projectionMatrix;
+			GetComponent<Camera>().projectionMatrix = om * GetComponent<Camera>().projectionMatrix;
 		}
 		
 	}
