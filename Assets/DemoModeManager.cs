@@ -1,23 +1,22 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class DemoModeManager : MonoBehaviour {
 
+    public bool demonstrationMode = false;
     public static DemoModeManager instance;
-    void Awake()
-    {
+
+    // Instantiate this singleton object
+    void Awake() {
         instance = this;
     }
 
-    public void SetDemonstrationMode()
-    {
+    // Turn demonstration mode on
+    public void SetDemonstrationMode() {
         demonstrationMode = true;
     }
 
-    public void SetStoryMode()
-    {
+    // Turn demonstration mode off
+    public void SetStoryMode() {
         demonstrationMode = false;
     }
-
-    public bool demonstrationMode = false;
 }
