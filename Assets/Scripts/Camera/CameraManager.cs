@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class CameraManager : MonoBehaviour {
 
@@ -12,6 +13,7 @@ public class CameraManager : MonoBehaviour {
     public VisualAidsCamera visualAidsCamera;
     public Camera oculusRiftRightCamera;
     public Camera normalCamera;
+    public Camera audioVRLinkCamera;
     public CanvasGroup visualAidsGroup;
     public GameObject screenAudioObject;
     public CameraSetting setting;
@@ -21,7 +23,7 @@ public class CameraManager : MonoBehaviour {
 
     public enum CameraSetting
     {
-        NORMAL, HEADTRACKING, OCULUSRIFT
+        NORMAL, HEADTRACKING, OCULUSRIFT, AUDIOVRLINK
     }
 
     public static Vector3 GetCameraForwardVector() { return instance.getCameraForwardVector(); }
@@ -66,6 +68,7 @@ public class CameraManager : MonoBehaviour {
         setNormalCameraEnabled(true);
         setOculusRiftCameraEnabled(false);
         setVisualAidsCameraEnabled(true);
+        setAudioVRLinkCameraEnabled(false);
         currentFirstPersonCamera = normalCamera;
         currentViewingCamera = visualAidsCamera.GetComponent<Camera>();
         visualAidsGroup.alpha = 1f;
@@ -84,6 +87,7 @@ public class CameraManager : MonoBehaviour {
         setNormalCameraEnabled(false);
         setOculusRiftCameraEnabled(true);
         setVisualAidsCameraEnabled(true);
+        setAudioVRLinkCameraEnabled(false);
         currentFirstPersonCamera = oculusRiftRightCamera;
         currentViewingCamera = visualAidsCamera.GetComponent<Camera>();
         visualAidsGroup.alpha = 1f;
@@ -102,11 +106,37 @@ public class CameraManager : MonoBehaviour {
         setNormalCameraEnabled(false);
         setOculusRiftCameraEnabled(true);
         setVisualAidsCameraEnabled(false);
+        setAudioVRLinkCameraEnabled(false);
         currentFirstPersonCamera = oculusRiftRightCamera;
         currentViewingCamera = oculusRiftRightCamera;
         visualAidsGroup.alpha = 0f;
         oculusRiftActivated = true;
         ScreenAudioManager.SetScreen(oculusRiftRightCamera);
+    }
+
+    private void SetAudioVRLinkMode()
+    {
+        AudioVRLink.connect();
+        if (!AudioVRLink.isConnected())
+        {
+            Debug.LogError("Audio VR Link is not connected.");
+            return;
+        }
+        setting = CameraSetting.AUDIOVRLINK;
+        setNormalCameraEnabled(false);
+        setOculusRiftCameraEnabled(false);
+        setVisualAidsCameraEnabled(false);
+        setAudioVRLinkCameraEnabled(true);
+        currentFirstPersonCamera = audioVRLinkCamera;
+        currentViewingCamera = audioVRLinkCamera;
+        visualAidsGroup.alpha = 0f;
+        oculusRiftActivated = false;
+        ScreenAudioManager.SetScreen(audioVRLinkCamera);
+    }
+
+    private void setAudioVRLinkCameraEnabled(bool enabled)
+    {
+        audioVRLinkCamera.transform.parent.gameObject.SetActive(enabled);
     }
 
     private void setNormalCameraEnabled(bool enabled)
@@ -134,6 +164,8 @@ public class CameraManager : MonoBehaviour {
                 SetHeadTrackingMode(); break;
             case CameraSetting.OCULUSRIFT:
                 SetOculusRiftMode(); break;
+            case CameraSetting.AUDIOVRLINK:
+                SetAudioVRLinkMode(); break;
         }
     }
 
