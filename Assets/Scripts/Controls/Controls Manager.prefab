@@ -42,6 +42,12 @@ MonoBehaviour:
   singleAxisControls:
     walkSpeed: 4
     turnSpeed: 180
+  oculusRiftControls:
+    walkSpeed: 4
+    turnSpeed: 180
+  audioVrControls:
+    walkSpeed: 4
+    turnSpeed: 180
   firstPersonShooterControls:
     walkSpeed: 4
     turnSpeed: 180

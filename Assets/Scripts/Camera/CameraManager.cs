@@ -11,7 +11,8 @@ public class CameraManager : MonoBehaviour {
 
     public VisualAidsCamera visualAidsCamera;
     public Camera oculusRiftRightCamera;
-    public Camera normalCamera;
+	public Camera normalCamera;
+	public Camera audioVrCamera;
     public CanvasGroup visualAidsGroup;
     public GameObject screenAudioObject;
     public CameraSetting setting;
@@ -72,6 +73,20 @@ public class CameraManager : MonoBehaviour {
         oculusRiftActivated = false;
         ScreenAudioManager.SetScreen(normalCamera);
     }
+
+	public void SetAVRMode()
+	{
+		setting = CameraSetting.NORMAL;
+		setNormalCameraEnabled(false);
+		setOculusRiftCameraEnabled(false);
+		setVisualAidsCameraEnabled(true);
+		currentFirstPersonCamera = audioVrCamera;
+		audioVrCamera.enabled = true;
+		currentViewingCamera = visualAidsCamera.camera;
+		visualAidsGroup.alpha = 1f;
+		oculusRiftActivated = false;
+		ScreenAudioManager.SetScreen(normalCamera);
+	}
 
     public void SetHeadTrackingMode()
     {

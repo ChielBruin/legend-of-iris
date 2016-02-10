@@ -28,6 +28,7 @@ public class ControlsManager : MonoBehaviour {
     }
     public SingleAxisControls singleAxisControls;
     public OculusRiftControls oculusRiftControls;
+	public AudioVrControls audioVrControls;
     public FirstPersonShooterControls firstPersonShooterControls;
     public FixedDirectionControls fixedDirectionControls;
     public ControllerOption DefaultControls = ControllerOption.SingleAxisControls;
@@ -62,7 +63,8 @@ public class ControlsManager : MonoBehaviour {
     {
         if (current != null)
             current.OnDisable();
-        current = controls;
+        //current = controls;
+		current = audioVrControls;
         current.OnEnable();
         needsReset = true;
     }
