@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -75,6 +76,7 @@ public static class VectorExtension
     {
         return v.addz(Randomg.Symmetrical(amount));
     }
+
     public static Vector2 mutate(this Vector2 v, Vector2 amount)
     {
         return new Vector2(v.x + Randomg.Symmetrical(amount.x), v.y + Randomg.Symmetrical(amount.y));
@@ -448,6 +450,15 @@ public static class VectorExtension
     public static Vector3 perpRz(this Vector3 v)
     {
         return new Vector3(v.y, -v.x, v.z);
+    }
+
+    /// <summary>
+    /// Limits the values of the vector to be in the range [min, max]
+    /// </summary>
+    public static void limit(Vector3 vect, float min, float max) {
+        vect.x = Math.Min(Math.Max(min, vect.x), max);
+        vect.y = Math.Min(Math.Max(min, vect.y), max);
+        vect.z = Math.Min(Math.Max(min, vect.z), max);
     }
     /// <summary> Perpendicular around y axis </summary>
     public static Vector3 perpRy(this Vector3 v)
