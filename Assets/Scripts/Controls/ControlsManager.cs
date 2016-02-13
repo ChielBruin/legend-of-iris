@@ -78,6 +78,10 @@ public class ControlsManager : MonoBehaviour {
         }
     }
 
+    public void onDisable() {
+        if (current != null) current.OnDisable();
+    }
+
     public enum ControllerOption
     {
         SingleAxisControls, FixedDirectionControls

@@ -49,7 +49,7 @@ namespace AudioVR
         /// Starts the connection with the AudioVRLink-app and parses the incoming data.
         /// </summary>
         private static void start() {
-            Debug.LogError("starting the AudioVRLink connection..");
+            Debug.Log("starting the AudioVRLink connection..");
 
             byte[] bytes = new Byte[1024];
 
@@ -67,34 +67,43 @@ namespace AudioVR
 
                 // Start listening for connections.
                 while (true) {
-                    Debug.LogError("Waiting for connection on " + localEndPoint);
-                    Debug.LogError(getChecksum(localEndPoint.ToString()));
+                    notifyUser(getChecksum(localEndPoint.ToString()));
                     Socket handler = listener.Accept();
-                    Debug.LogError("Connection made");
+                    notifyUser("Connection made");
                     socket = handler;
+                    handler.ReceiveTimeout = 1000;
                     while (true) {
-                        bytes = new byte[1024];
-                        //if (!handler.Poll(1000, SelectMode.SelectRead)) break;
-                        int bytesRec = handler.Receive(bytes);
-                        String str = Encoding.ASCII.GetString(bytes, 0, bytesRec);
-                        String[] values = str.Split('\n');
-                        forward = new Vector3(Single.Parse(values[0]), 0f, Single.Parse(values[2]));
-                        moveSpeed = Single.Parse(values[3]);
-                        moveSpeed = Math.Max(-1f, Math.Min(moveSpeed, 1f));     // limit
-                        VectorExtension.limit(forward, -1f, 1f);
+                        try {
+                            bytes = new byte[1024];
+                            //if (!handler.Connected) break;
+                            int bytesRec = handler.Receive(bytes);
+                            String str = Encoding.ASCII.GetString(bytes, 0, bytesRec);
+                            String[] values = str.Split('\n');
+                            forward = new Vector3(Single.Parse(values[0]), 0f, Single.Parse(values[2]));
+                            moveSpeed = Single.Parse(values[3]);
+                            moveSpeed = Math.Max(-1f, Math.Min(moveSpeed, 1f));     // limit
+                            VectorExtension.limit(forward, -1f, 1f);
+                        } catch (Exception e) {  //Timeout
+                            handler.Close();
+                           notifyUser("connection closed");
+
+                            // reset values
+                            socket = null;
+                            moveSpeed = 0f;
+                            forward = Vector3.forward;
+
+                            break;
+                        }
                     }
-                    Debug.LogError("connection closed");
-                    // reset values
-                    socket = null;
-                    moveSpeed = 0f;
-                    forward = Vector3.forward;
-                    handler.Shutdown(SocketShutdown.Both);
-                    handler.Close();
                 }
 
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
             }
+        }
+
+        private static void notifyUser(string msg) {
+            Debug.LogError(msg);
         }
 
         /// <summary>
