@@ -4,7 +4,9 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Collections.Generic;
 
+using Message = System.Collections.Generic.KeyValuePair<float, string>;
 
 namespace AudioVR
 {
@@ -13,6 +15,8 @@ namespace AudioVR
         private static float moveSpeed = 0;
         private static Socket socket = null;
         private static Thread t;
+        private static ConversationPlayer notificationPlayer = new ConversationPlayer(new Conversation());
+        private static List<Message> notifications = new List<Message>();
 
         /// <summary>
         /// Starts the server that communicates wih the AudioVRLink-app
@@ -67,9 +71,9 @@ namespace AudioVR
 
                 // Start listening for connections.
                 while (true) {
-                    notifyUser(getChecksum(localEndPoint.ToString()));
+                    notifyUser(20f, "Please connect the AudioVRLink-app.\nConnect code: " + getChecksum(localEndPoint.ToString()));
                     Socket handler = listener.Accept();
-                    notifyUser("Connection made");
+                    notifyUser(2f, "Connection established");
                     socket = handler;
                     handler.ReceiveTimeout = 1000;
                     while (true) {
@@ -85,7 +89,7 @@ namespace AudioVR
                             VectorExtension.limit(forward, -1f, 1f);
                         } catch (Exception e) {  //Timeout
                             handler.Close();
-                           notifyUser("connection closed");
+                           notifyUser(1f, "connection closed");
 
                             // reset values
                             socket = null;
@@ -102,8 +106,11 @@ namespace AudioVR
             }
         }
 
-        private static void notifyUser(string msg) {
-            Debug.LogError(msg);
+        /// <summary>
+        /// Notify the user by showing a subtitle element with specified timing and message.
+        /// </summary>
+        private static void notifyUser(float time, string msg) {
+            notifications.Add(new Message(time, msg));
         }
 
         /// <summary>
@@ -135,6 +142,18 @@ namespace AudioVR
         public static bool isConnected() {
             if (socket == null) return false;
             return isConnected(socket);
+        }
+
+        /// <summary>
+        /// Called once per frame.
+        /// Shows all buffered notifications to the player
+        /// Note: These messages are not spoken with sound as the connection code needs to be enterd by a sighted person.
+        /// </summary>
+        public static void Update() {
+            foreach(Message msg in notifications) {
+                notificationPlayer.addSubtitle(SubtitlesManager.ShowSubtitle(msg.Key, "AudioVRLink", msg.Value));
+            }
+            notifications.Clear();
         }
     }
 }

@@ -140,6 +140,14 @@ public class ConversationPlayer
         if (skip) ap.MarkRemovable();
     }
 
+    /// <summary>
+    /// Adds the given SubtitleElement to the list of displaying subtitles.
+    /// This method should only be used when a subtitle without spoken audio is shown.
+    /// </summary>
+    public void addSubtitle(SubtitleElement se) {
+        activeSubtitles.Add(se);
+    }
+
     private void OnConversationEnd()
     {
         if (ConversationEnd != null && !conversationEndFired)

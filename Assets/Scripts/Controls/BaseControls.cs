@@ -9,6 +9,12 @@ public abstract class BaseControls
 	/// </summary>
     public abstract void OnEnable();
 
+    /// <summary>
+    /// Method called every game-tick.
+    /// Does not have to be implemented.
+    /// </summary>
+    public virtual void Update() { }
+
 	/// <summary>
 	/// Gets the movement vector. This vector has the length equal to the movement speed.
 	/// </summary>

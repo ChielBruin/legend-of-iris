@@ -27,4 +27,8 @@ public class AudioVrControls : BaseControls
 	public override void OnDisable() {
         AudioVR.Link.stopServer();
     }
+
+    public override void Update() {
+        AudioVR.Link.Update();
+    }
 }

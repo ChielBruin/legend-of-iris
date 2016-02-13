@@ -82,6 +82,10 @@ public class ControlsManager : MonoBehaviour {
         if (current != null) current.OnDisable();
     }
 
+    public void Update() {
+        if (current != null) current.Update();
+    }
+
     public enum ControllerOption
     {
         SingleAxisControls, FixedDirectionControls
