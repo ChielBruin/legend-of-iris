@@ -75,11 +75,10 @@ namespace AudioVR
                     Socket handler = listener.Accept();
                     notifyUser(2f, "Connection established");
                     socket = handler;
-                    handler.ReceiveTimeout = 1000;
+                    handler.ReceiveTimeout = 5000;
                     while (true) {
                         try {
                             bytes = new byte[1024];
-                            //if (!handler.Connected) break;
                             int bytesRec = handler.Receive(bytes);
                             String str = Encoding.ASCII.GetString(bytes, 0, bytesRec);
                             String[] values = str.Split('\n');
