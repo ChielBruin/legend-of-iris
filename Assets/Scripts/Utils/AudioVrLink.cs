@@ -83,7 +83,7 @@ namespace AudioVR
                             int bytesRec = handler.Receive(bytes);
                             String str = Encoding.ASCII.GetString(bytes, 0, bytesRec);
                             String[] values = str.Split('\n');
-                            forward = new Vector3(Single.Parse(values[0]), 0f, Single.Parse(values[2]));
+                            forward = new Vector3(Single.Parse(values[0]), Single.Parse(values[1]), Single.Parse(values[2]));
                             moveSpeed = Single.Parse(values[3]);
                             moveSpeed = Math.Max(-1f, Math.Min(moveSpeed, 1f));     // limit
                             VectorExtension.limit(forward, -1f, 1f);
