@@ -24,9 +24,11 @@ public class VisualAidsCamera : MonoBehaviour {
     void FixedUpdate()
     {
         Transform followee = followeeOR.gameObject.activeInHierarchy ? followeeOR : followeeNormal;
-        zoom -= scrollSpeed * Input.GetAxis("ZOOM") / 20f;
+#if UNITY_ANDROID
+#else        
+		zoom -= scrollSpeed * Input.GetAxis("ZOOM") / 20f;
         zoom = Mathf.Clamp01(zoom);
-
+#endif
         float y = maxZoom * zoom + minZoom;
         currentForward += (followee.TransformDirection(followeeLocalForward) - currentForward) * Timeg.safeFixedDelta(rotationConvergeSpeed);
         transform.position += (followee.position.sety(y) - transform.position) * Timeg.safeFixedDelta(positionConvergeSpeed);
