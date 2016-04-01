@@ -10,7 +10,7 @@ public class CameraManager : MonoBehaviour {
     }
 
     public VisualAidsCamera visualAidsCamera;
-    public Camera oculusRiftRightCamera;
+	public Camera oculusRiftRightCamera;
     public Camera normalCamera;
     public CanvasGroup visualAidsGroup;
     public GameObject screenAudioObject;

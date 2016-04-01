@@ -58,6 +58,20 @@ public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
 
     private Direction? GetKeyPressed()
     {
+#if UNITY_ANDROID
+		if (Input.touchCount > 0) {
+			Vector2 d = Input.GetTouch(0).deltaPosition;
+			if (d.y > 0) 
+				return Direction.Forward;
+			if (d.y < 0) 
+				return Direction.Backward;
+			if (d.x > 0) 
+				return Direction.Right;
+			if (d.x < 0) 
+				return Direction.Left;
+		}
+		return null;
+#else
         if (Input.GetAxisRaw("Vertical") > 0.9)
             return Direction.Forward;
         if (Input.GetAxisRaw("Vertical") < -0.9)
@@ -67,6 +81,7 @@ public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
         if (Input.GetAxisRaw("Horizontal") < -0.9)
             return Direction.Left;
         return null;
+#endif
     }
 
     private void StartConversation() {

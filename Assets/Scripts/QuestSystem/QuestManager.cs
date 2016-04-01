@@ -36,7 +36,7 @@ public class QuestManager : MonoBehaviour {
     void Update()
     {
         // Send the quests update notifications, so they can keep internal timers etc.
-        foreach (var quest in quests) {
+		foreach (var quest in quests) {
             if (quest.state == Quest.State.STARTED) quest.Update();
         }
 

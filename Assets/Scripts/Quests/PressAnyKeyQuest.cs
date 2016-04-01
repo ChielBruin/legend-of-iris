@@ -14,10 +14,17 @@ public class PressAnyKeyQuest : Quest<PressAnyKeyQuest, PressAnyKeyQuestDefiniti
     }
 
     public override void Update() {
+#if UNITY_ANDROID
+		if(Input.touchCount > 0) {
+			Complete();
+			return;
+		}
+#else
         if (Input.anyKeyDown) {
             Complete();
             return;
         }
+#endif
         if (Time.time > lastConversationEnd + definition.repeatDelay)
             StartConversation();
     }
