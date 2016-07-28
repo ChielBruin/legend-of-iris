@@ -35,6 +35,8 @@ public class TimerManager : MonoBehaviour {
             niceTime = instance.GetTimerString(),
             eventName = eventName
         });
+#if UNITY_ANDROID
+#else
         string output = "";
         foreach (TimedEvent t in instance.events) {
             output += t + "\n";
@@ -51,6 +53,7 @@ public class TimerManager : MonoBehaviour {
         {
             // Too bad
         }
+#endif
 
     }
 
