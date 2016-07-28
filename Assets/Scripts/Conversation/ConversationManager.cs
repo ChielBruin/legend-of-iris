@@ -51,7 +51,7 @@ public class ConversationManager : MonoBehaviour {
 
         // check if player wants to skip
 #if UNITY_ANDROID
-		if (Input.touchCount > 1)
+		if (Input.touchCount == 2)
 #else
 		if (Input.GetButtonUp("SKIP"))
 #endif

@@ -56,10 +56,9 @@ public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
         }
     }
 
-    private Direction? GetKeyPressed()
-    {
+    private Direction? GetKeyPressed() {
 #if UNITY_ANDROID
-		if (Input.touchCount > 0) {
+		if (Input.touchCount == 1) {
 			Vector2 d = Input.GetTouch(0).deltaPosition;
 			if (d.y > 0) 
 				return Direction.Forward;

@@ -43,7 +43,7 @@ public class QuestManager : MonoBehaviour {
         var cheatPressed = GetCheatPressed();
         if (cheatPressed.HasValue)
         {
-            Debug.Log("Cheat, started quest " + cheatPressed.Value);
+            //Debug.Log("Cheat, started quest " + cheatPressed.Value);
             if (cheatQuests.Count > cheatPressed.Value)
                 StartQuest(cheatQuests[cheatPressed.Value]);
         }
@@ -82,8 +82,14 @@ public class QuestManager : MonoBehaviour {
         }
     }
 
-    private int? GetCheatPressed()
-    {
+    private int? GetCheatPressed() {
+#if UNITY_ANDROID
+		//if (Input.touchCount > 3) {
+		//	return Input.touchCount - 3;
+		//} else {
+			return null;
+		//}
+#else
         if (Input.GetKey(KeyCode.LeftControl))
         {
             if (Input.GetKeyDown(KeyCode.F2))
@@ -92,10 +98,11 @@ public class QuestManager : MonoBehaviour {
                 return 1;
         }
         return null;
+#endif
     }
 
 	private static void OnQuestEvent(Quest quest) {
-		Debug.Log(quest.state + ": " + quest.definition.gameObject.name);
+		//Debug.Log(quest.state + ": " + quest.definition.gameObject.name);
 	}
 
 }
