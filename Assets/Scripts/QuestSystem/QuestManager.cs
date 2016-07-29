@@ -102,7 +102,7 @@ public class QuestManager : MonoBehaviour {
     }
 
 	private static void OnQuestEvent(Quest quest) {
-		//Debug.Log(quest.state + ": " + quest.definition.gameObject.name);
+		Debug.Log(quest.state + ": " + quest.definition.gameObject.name);
 	}
 
 }
