@@ -42,6 +42,9 @@ MonoBehaviour:
   singleAxisControls:
     walkSpeed: 4
     turnSpeed: 180
+  oculusRiftControls:
+    walkSpeed: 0
+    turnSpeed: 0
   firstPersonShooterControls:
     walkSpeed: 4
     turnSpeed: 180
@@ -57,6 +60,8 @@ MonoBehaviour:
     up: {x: 0, y: 1, z: 0}
     turnSpeed: .00999999978
     moveSpeed: 2
+  mobileControls:
+    hasGyro: 0
   DefaultControls: 0
   needsReset: 0
 --- !u!1001 &100100000

@@ -42,4 +42,8 @@ public class OculusRiftControls : BaseControls
     {
 
     }
+
+	public override ControllerOption GetType() {
+		return ControllerOption.OculusRiftControls;
+	}
 }

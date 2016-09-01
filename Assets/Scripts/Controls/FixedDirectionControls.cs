@@ -120,4 +120,8 @@ public class FixedDirectionControls : BaseControls
     }
 
     public override void OnDisable() { }
+
+	public override ControllerOption GetType() {
+		return ControllerOption.FixedDirectionControls;
+	}
 }

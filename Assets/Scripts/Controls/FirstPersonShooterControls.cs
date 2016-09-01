@@ -37,8 +37,9 @@ public class FirstPersonShooterControls : BaseControls
         return hor * ver;
     }
 
-    public override void OnDisable()
-    {
-        
-    }
+	public override void OnDisable() { }
+
+	public override ControllerOption GetType() {
+		return ControllerOption.FirstPersonShooterControls;
+	}
 }

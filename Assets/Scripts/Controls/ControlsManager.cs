@@ -30,7 +30,13 @@ public class ControlsManager : MonoBehaviour {
     public OculusRiftControls oculusRiftControls;
     public FirstPersonShooterControls firstPersonShooterControls;
     public FixedDirectionControls fixedDirectionControls;
-    public ControllerOption DefaultControls = ControllerOption.SingleAxisControls;
+	public MobileControls mobileControls;
+
+#if UNITY_ANDROID
+	public ControllerOption DefaultControls = ControllerOption.MobileControls;
+#else
+    public ControllerOption DefaultControls = ControllerOption.MobileControls;
+#endif
     public bool needsReset;
 
     public void SetSingleAxisControls()
@@ -58,8 +64,14 @@ public class ControlsManager : MonoBehaviour {
         needsReset = false;
     }
 
-    public void SetControls(BaseControls controls)
-    {
+    public void SetControls(BaseControls controls) {
+#if UNITY_ANDROID
+		if (controls.GetType() != ControllerOption.MobileControls) {
+			SetControls(mobileControls);
+			return;
+		}
+#endif
+		if (current == controls) return;
         if (current != null)
             current.OnDisable();
         current = controls;
@@ -73,11 +85,7 @@ public class ControlsManager : MonoBehaviour {
         {
             case ControllerOption.FixedDirectionControls: SetControls(fixedDirectionControls); break;
             case ControllerOption.SingleAxisControls: SetControls(singleAxisControls); break;
+			case ControllerOption.MobileControls: SetControls(mobileControls); break;
         }
-    }
-
-    public enum ControllerOption
-    {
-        SingleAxisControls, FixedDirectionControls
     }
 }
