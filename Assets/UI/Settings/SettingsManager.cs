@@ -7,6 +7,9 @@ public class SettingsManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+#if UNITY_ANDROID
+		Screen.sleepTimeout = SleepTimeout.NeverSleep;
+#endif
     }
 
     public static int activeSettingType = 0;
