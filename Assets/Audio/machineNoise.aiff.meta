@@ -6,7 +6,7 @@ AudioImporter:
   quality: .680000007
   stream: 2
   3D: 1
-  forceToMono: 0
+  forceToMono: 1
   useHardware: 0
   loopable: 0
   userData: 
