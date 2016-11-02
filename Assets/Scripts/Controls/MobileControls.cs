@@ -13,9 +13,9 @@ public class MobileControls : BaseControls {
 	/// <returns>the generated speed value</returns>
 	public float getTouchInput ()	{
 		if (Input.touchCount != 1) {
-			return Input.GetAxis ("Vertical");
+			return Input.GetAxis("Vertical");
 		}
-		return Input.GetTouch (0).position.y - (Screen.height / 2);
+		return Input.GetTouch (0).position.y > Screen.height / 2 ? 1f : -1f;
 	}
 	
 	/// <summary>
