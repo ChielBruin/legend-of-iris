@@ -15,7 +15,7 @@ public class PressAnyKeyQuest : Quest<PressAnyKeyQuest, PressAnyKeyQuestDefiniti
 
     public override void Update() {
 #if UNITY_ANDROID
-		if(Input.touchCount == 1) {
+		if(Input.touchCount == 1 || Input.anyKeyDown) {
 			Complete();
 			return;
 		}

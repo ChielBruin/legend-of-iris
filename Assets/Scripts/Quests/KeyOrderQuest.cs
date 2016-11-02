@@ -68,6 +68,11 @@ public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
 				return Direction.Right;
 			if (d.x < 0) 
 				return Direction.Left;
+		} else {
+			if (Input.GetAxisRaw("Vertical") > 0.9)
+				return Direction.Forward;
+			if (Input.GetAxisRaw("Vertical") < -0.9)
+				return Direction.Backward;
 		}
 		return null;
 #else

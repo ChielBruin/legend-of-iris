@@ -12,8 +12,10 @@ public class MobileControls : BaseControls {
 	/// </summary>
 	/// <returns>the generated speed value</returns>
 	public float getTouchInput ()	{
-		if (Input.touchCount != 1) return 0;
-		return Input.GetTouch (0).position.y > Screen.height / 2 ? 1f : -1f;
+		if (Input.touchCount != 1) {
+			return Input.GetAxis ("Vertical");
+		}
+		return Input.GetTouch (0).position.y - (Screen.height / 2);
 	}
 	
 	/// <summary>
@@ -45,6 +47,7 @@ public class MobileControls : BaseControls {
 			return Quaternion.AngleAxis(Input.compass.trueHeading - current.eulerAngles.y, Vector3.up);
 		}
 	}
+
 	public override void OnDisable() {
 		if (hasGyro) {
 			Input.gyro.enabled = false;
