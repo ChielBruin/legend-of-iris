@@ -83,8 +83,19 @@ public class SettingsManager : MonoBehaviour
         {
             PauseManager.Pause();
             //Screen.showCursor = true;
-        }
-        else
+
+#if UNITY_ANDROID
+			if (Input.touchCount > 2 && Input.GetTouch(0).phase == TouchPhase.Stationary) {
+				Application.Quit();
+			}
+#else
+			if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Q))
+			{
+				Application.Quit();
+			}
+#endif
+		}
+		else
         {
             PauseManager.Resume();
         }
@@ -104,15 +115,5 @@ public class SettingsManager : MonoBehaviour
             pressedDown = false;
             pressedUp = false;
         }
-#if UNITY_ANDROID
-		if (Input.touchCount > 2 && Input.GetTouch(0).phase == TouchPhase.Stationary) {
-			Application.Quit();
-		}
-#else
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.Q))
-        {
-            Application.Quit();
-        }
-#endif
     }
 }
