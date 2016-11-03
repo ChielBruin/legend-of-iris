@@ -24,7 +24,8 @@ public class MobileControls : BaseControls {
 	/// </summary>
 	public override void OnEnable() {
 		Input.location.Start();
-		hasGyro = SystemInfo.supportsGyroscope;
+		//hasGyro = SystemInfo.supportsGyroscope;
+		hasGyro = false;
 		if (hasGyro) {
 			Input.gyro.enabled = true;
 			Debug.Log("Gyroscope enabled");
