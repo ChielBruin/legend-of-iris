@@ -6,6 +6,7 @@ public class MobileControls : BaseControls {
 	
 	private float walkSpeed = 2f;
 	public bool hasGyro;
+	private float compassHeading = 0f;
 	
 	/// <summary>
 	/// Gets the touch input from the android device and converts this to a value indicating the walking speed.
@@ -40,11 +41,18 @@ public class MobileControls : BaseControls {
 		return res;
 	}
 
+	public float getCompassAvgHeading() {
+		float h = Input.compass.trueHeading;
+		float res = (h + compassHeading) / 2f;
+		compassHeading = h;
+		return res;
+	}
+
 	public override UnityEngine.Quaternion GetRotation(Quaternion current) {
 		if (hasGyro) {
 			return Input.gyro.attitude;
 		} else {
-			return Quaternion.AngleAxis(Input.compass.trueHeading - current.eulerAngles.y, Vector3.up);
+			return Quaternion.AngleAxis(getCompassAvgHeading() - current.eulerAngles.y, Vector3.up);
 		}
 	}
 
