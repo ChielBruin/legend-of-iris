@@ -51,7 +51,7 @@ public class MobileControls : BaseControls {
 
 	public override UnityEngine.Quaternion GetRotation(Quaternion current) {
 		if (hasGyro) {
-			return Input.gyro.attitude;
+			return Quaternion.AngleAxis(-Mathf.Rad2Deg * Input.gyro.rotationRateUnbiased.z * Time.deltaTime, Vector3.up);
 		} else {
 			return Quaternion.AngleAxis(getCompassAvgHeading() - current.eulerAngles.y, Vector3.up);
 		}
