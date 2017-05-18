@@ -84,7 +84,7 @@ public class OVRMagCalibration
 		{
 			GeometryReference =
 			GameObject.Instantiate(Resources.Load("OVRMagReference")) as GameObject;
-			GeometryReferenceMarkMat = GeometryReference.transform.Find ("Mark").renderer.material;
+			GeometryReferenceMarkMat = GeometryReference.transform.Find ("Mark").GetComponent<Renderer>().material;
 		}
 		
 		if(GeometryReference != null)

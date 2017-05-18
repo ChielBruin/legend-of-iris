@@ -77,7 +77,7 @@ public class SpiritController : MonoBehaviour {
     void bodyTrigger_TriggerExit(object sender, TriggerEventArgs e)
     {
         var other = e.Trigger;
-        if (other == generator.spiritLiveArea.collider)
+        if (other == generator.spiritLiveArea.GetComponent<Collider>())
         {
             // If a spirit isn't in the game anymore we take if off the spirit list
             generator.RemoveSpirit(this.gameObject);
