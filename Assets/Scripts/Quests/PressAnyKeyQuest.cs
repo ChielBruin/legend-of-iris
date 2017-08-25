@@ -1,6 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
+/// <summary>
+/// Quest that gets completed when any input is given
+/// On mobile this is a one-finger tap
+/// </summary>
 public class PressAnyKeyQuest : Quest<PressAnyKeyQuest, PressAnyKeyQuestDefinition> {
 
     private float lastConversationEnd = 0;
@@ -13,6 +17,9 @@ public class PressAnyKeyQuest : Quest<PressAnyKeyQuest, PressAnyKeyQuestDefiniti
         StartConversation();
     }
 
+	/// <summary>
+	/// Update the quest by checking for completion.
+	/// </summary>
     public override void Update() {
 #if UNITY_ANDROID
 		if(Input.touchCount == 1 || Input.anyKeyDown) {

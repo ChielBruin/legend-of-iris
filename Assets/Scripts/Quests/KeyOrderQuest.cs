@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// A quest in where the player needs to press keys in  agiven order.
+/// </summary>
 public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
 
     private float lastConversationEnd = 0;
@@ -56,6 +59,14 @@ public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
         }
     }
 
+	/// <summary>
+	/// Get the pressed keys and return the direction the represent.
+	/// For mobile users these keys are a one-finger-swipe in a direction
+	/// or a two finger 'scrolling' gesture
+	/// </summary>
+	/// <returns>
+	/// The direction represented by the input, or null when no input given
+	/// </returns>
     private Direction? GetKeyPressed() {
 #if UNITY_ANDROID
 		if (Input.touchCount == 1) {
@@ -69,6 +80,7 @@ public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
 			if (d.x < 0) 
 				return Direction.Left;
 		} else {
+			//TODO: Add horizontal scroll
 			if (Input.GetAxisRaw("Vertical") > 0.9)
 				return Direction.Forward;
 			if (Input.GetAxisRaw("Vertical") < -0.9)

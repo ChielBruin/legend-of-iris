@@ -3,6 +3,10 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+
+/// <summary>
+/// The manager of the questing system.
+/// </summary>
 public class QuestManager : MonoBehaviour {
 
 	public List<GameObject> startingQuests = new List<GameObject>();
@@ -12,6 +16,11 @@ public class QuestManager : MonoBehaviour {
 
     private List<Quest> activeQuests = new List<Quest>();
 
+	
+	/// <summary>
+	/// Initilize the quest manager
+	/// Attaches handlers to all quests and strats the starting quests.
+	/// </summary>
 	void Start () {
 		// Register handlers on all quests for logging purposes
 		Quest.onAnyQuestStart += OnQuestEvent;
@@ -33,6 +42,10 @@ public class QuestManager : MonoBehaviour {
         };
 	}
 
+
+	/// <summary>
+	/// Update all active quests and complete some when some cheaty combos are pressed.
+	/// </summary>
     void Update()
     {
         // Send the quests update notifications, so they can keep internal timers etc.
@@ -59,16 +72,22 @@ public class QuestManager : MonoBehaviour {
             }
         }
     }
-
+	
+	
+	/// <summary>
+	/// Send the quests fixed update notifications, so they can keep internal timers etc.
+	/// </summary>
     void FixedUpdate()
     {
-        // Send the quests fixed update notifications, so they can keep internal timers etc.
         foreach (var quest in quests)
         {
             if (quest.state == Quest.State.STARTED) quest.FixedUpdate();
         }
     }
 
+	/// <summary>
+	/// Start the quests contained in the given GameOgbject
+	/// </summary>
     public void StartQuest(GameObject questGO)
     {
         foreach(var quest in questGO.GetComponents<QuestDefinition>())
@@ -82,13 +101,18 @@ public class QuestManager : MonoBehaviour {
         }
     }
 
+	/// <summary>
+	/// Check if an input is given that corresponds to activating cheatcodes
+	/// </summary>
+	/// <returns>The entered cheatcode, or null when none is entered.</returns>
     private int? GetCheatPressed() {
 #if UNITY_ANDROID
-		//if (Input.touchCount > 3) {
-		//	return Input.touchCount - 3;
-		//} else {
+		// TODO: a 4 or 5 finger tap is not very intuitive
+		if (Input.touchCount > 3) {
+			return Input.touchCount - 3;
+		} else {
 			return null;
-		//}
+		}
 #else
         if (Input.GetKey(KeyCode.LeftControl))
         {
@@ -101,6 +125,9 @@ public class QuestManager : MonoBehaviour {
 #endif
     }
 
+	/// <summary>
+	/// Handler for quest state changes.
+	/// </summary>
 	private static void OnQuestEvent(Quest quest) {
 		Debug.Log(quest.state + ": " + quest.definition.gameObject.name);
 	}
