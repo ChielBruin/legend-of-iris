@@ -41,6 +41,11 @@ public class MobileControls : BaseControls {
 		return res;
 	}
 
+	/// <summary>
+	/// Gets the heading of the compass (and thus the player)
+	/// Takes a 2 wide sliding window average, to make the movement more smooth.
+	/// </summary>
+	/// <returns>The heading angle of the compass</returns>
 	public float getCompassAvgHeading() {
 		float h = Input.compass.trueHeading;
 		float res = (h + compassHeading) / 2f;

@@ -2,15 +2,13 @@
 using UnityEngine;
 
 [Serializable]
+/// <summary>
+/// Controls used when playing with the oculus.
+/// </summary>
 public class OculusRiftControls : BaseControls
 {
     public float walkSpeed;
     public float turnSpeed;
-
-    public override void OnEnable()
-    {
-
-    }
 
     public override UnityEngine.Vector3 GetMove(Vector3 current)
     {
@@ -18,6 +16,11 @@ public class OculusRiftControls : BaseControls
         return forward * Time.deltaTime * walkSpeed * Input.GetAxis("Vertical");
     }
 
+	/// <summary>
+	/// Gets the horizontal axis relative heading from the oculus.
+	/// Note that the oculus inputs are mapped to O and P.
+	/// </summary>
+	/// <returns>The relative horizontal heading</returns>
     private float GetHorizontalAxis()
     {
         float r = 0f;

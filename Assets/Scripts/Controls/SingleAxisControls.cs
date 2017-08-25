@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Single axis controls.
 /// A control used when the input is composed of only a froward/backward and a left/right turn.
+/// This is the default control in the game.
 /// </summary>
 public class SingleAxisControls : BaseControls {
 

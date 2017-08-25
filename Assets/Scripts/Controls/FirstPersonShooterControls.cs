@@ -2,6 +2,10 @@
 using UnityEngine;
 
 [Serializable]
+/// <summary>
+/// Controls where the player moves using WASD and points its gaze using the mouse.
+/// This is the same way that most first person games are controlled.
+/// </summary>
 public class FirstPersonShooterControls : BaseControls
 {
     public float walkSpeed;

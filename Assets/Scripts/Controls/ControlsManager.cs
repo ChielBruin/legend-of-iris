@@ -1,6 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Manager for the different control methods.
+/// Facilitates a nice way to switch them during the game. 
+/// </summary>
 public class ControlsManager : MonoBehaviour {
     public static ControlsManager instance;
     void Awake()
@@ -12,6 +16,7 @@ public class ControlsManager : MonoBehaviour {
     {
         get
         {
+			// Override controlls when the oculus is active
             if (CameraManager.instance.oculusRiftActivated)
             {
                 return instance.oculusRiftControls;
@@ -32,6 +37,7 @@ public class ControlsManager : MonoBehaviour {
     public FixedDirectionControls fixedDirectionControls;
 	public MobileControls mobileControls;
 
+	// Switch the default contronls depending on if the game is run on mobile or not
 #if UNITY_ANDROID
 	public ControllerOption DefaultControls = ControllerOption.MobileControls;
 #else
@@ -39,31 +45,51 @@ public class ControlsManager : MonoBehaviour {
 #endif
     public bool needsReset;
 
+	/// <summary>
+	/// Set the current controls to the SingleAxisControls
+	/// </summary>
     public void SetSingleAxisControls()
     {
         SetControls(singleAxisControls);
     }
 
+	/// <summary>
+	/// Set the current controls to the FPS controls
+	/// </summary>
     public void SetFirstPersonShooterControls()
     {
         SetControls(firstPersonShooterControls);
     }
 
+
+	/// <summary>
+	/// Set the current controls to the DixedDirectionControls
+	/// </summary>
     public void SetFixedDirectionControls()
     {
         SetControls(fixedDirectionControls);
     }
 
+	/// <returns>True when the manager needs a reset, false otherwise</returns>
     public bool NeedsReset()
     {
         return needsReset;
     }
 
+	/// <summary>
+	/// Method called when the reset is done
+	/// </summary>
     public void ResetDone()
     {
         needsReset = false;
     }
 
+	/// <summary>
+	/// Set the current controls to the given control.
+	/// Marks the manager for a reset when the change occurs.
+	/// Note that mobile controlls always override any control when on mobile.
+	/// </summary>
+	/// <param name="controls">The new control to set it to</param>
     public void SetControls(BaseControls controls) {
 #if UNITY_ANDROID
 		if (controls.GetType() != ControllerOption.MobileControls) {
@@ -79,6 +105,9 @@ public class ControlsManager : MonoBehaviour {
         needsReset = true;
     }
 
+	/// <summary>
+	/// Called when the manager is started, initiates with the default controls.
+	/// </summary>
     void Start()
     {
         switch(DefaultControls)
