@@ -80,7 +80,7 @@ public class KeyOrderQuest : Quest<KeyOrderQuest, KeyOrderQuestDefinition> {
 			if (d.x < 0) 
 				return Direction.Left;
 		} else {
-			//TODO: Add horizontal scroll
+			//TODO: Add horizontal scroll for use with external input device
 			if (Input.GetAxisRaw("Vertical") > 0.9)
 				return Direction.Forward;
 			if (Input.GetAxisRaw("Vertical") < -0.9)
